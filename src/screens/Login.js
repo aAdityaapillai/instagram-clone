@@ -1,11 +1,11 @@
 import React, { useState } from "react"
-import { Alert, Text, View, TextInput, StyleSheet, SafeAreaView } from "react-native"
+import { Alert, Text, View, TextInput, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native"
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { Button } from "../compoments/Button";
 
 
-export const Register = ({ navigation }) => {
+export const Login = ({ navigation }) => {
 
     const auth = getAuth();
 
@@ -16,7 +16,7 @@ export const Register = ({ navigation }) => {
     });
 
     const submitForm = () => {
-        //Alert.alert(JSON.stringify(user));
+        Alert.alert(JSON.stringify(user));
 
         createUserWithEmailAndPassword(auth, user.email, user.password)
             .then((userCredential) => {
@@ -32,20 +32,11 @@ export const Register = ({ navigation }) => {
             });
     }
 
-    const navigateToLogin = () => {
-        navigation.navigate("Login")
-    }
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{ flex: 1, alignItems: "center", paddingHorizontal: 6 }}>
-                <Text style={styles.header}>Register</Text>
+                <Text style={styles.header}>Login</Text>
 
-                <TextInput
-                    style={styles.input}
-                    placeholder="name"
-                    onChangeText={(name) => setUser({ ...user, "name": name })}
-                />
                 <TextInput
                     autoCapitalize="none"
                     style={styles.input}
@@ -60,9 +51,7 @@ export const Register = ({ navigation }) => {
                     onChangeText={(password) => setUser({ ...user, "password": password })}
                 />
 
-                <Button onPress={submitForm} title={"Register"} />
-
-                <Button onPress={navigateToLogin} title={"Existing User?"} />
+                <Button onPress={submitForm} title={"Login"} />
 
             </View>
         </SafeAreaView>
@@ -83,6 +72,19 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: "800",
         marginVertical: 10
-    }
+    },
+
+    button: {
+        backgroundColor: '#222',
+        marginVertical: 10,
+        paddingHorizontal: 16,
+        paddingVertical: 6,
+        borderRadius: 20
+    },
+
+    buttonText: {
+        color: '#fff',
+        fontWeight: "800",
+    },
 });
 
